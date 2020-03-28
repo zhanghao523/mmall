@@ -16,7 +16,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, password, email, phone, question, answer, role, create_time, update_time
+    id, username, `password`, email, phone, question, answer, role, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -151,4 +151,17 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="checkUsername" resultType="java.lang.Integer" parameterType="String">
+    SELECT count(1) from mmall_user
+    WHERE username = #{username}
+  </select>
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+      <include refid="Base_Column_List" />
+      from mmall_user
+      WHERE username = #{username}
+      and password = #{password}
+  </select>
+
 </mapper>
